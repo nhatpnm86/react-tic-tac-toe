@@ -56,6 +56,7 @@ class Game extends React.Component {
       }],
       stepNumber: 0,
       xIsNext: true,
+      movesSortingIsAscending: true,
     }
   }
 
@@ -86,6 +87,12 @@ class Game extends React.Component {
     });
   }
 
+  handleSortMovesClick() {
+    this.setState({
+      movesSortingIsAscending: !this.state.movesSortingIsAscending,
+    });
+  }
+
   render() {
     const history = this.state.history;
     const current = history[this.state.stepNumber];
@@ -111,12 +118,18 @@ class Game extends React.Component {
       );
     });
 
+    if (!this.state.movesSortingIsAscending) {
+      moves.reverse();
+    }
+
     let status;
     if (winner) {
       status = 'Winner: ' + winner;
     } else {
       status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
     }
+
+    let sortingDescription = `Sort move list in ${this.state.movesSortingIsAscending ? 'descending' : 'ascending'} order`;
 
     return (
       <div className="game">
@@ -128,6 +141,7 @@ class Game extends React.Component {
         </div>
         <div className="game-info">
           <div>{status}</div>
+          <button onClick={() => this.handleSortMovesClick()}>{sortingDescription}</button>
           <ol>{moves}</ol>
         </div>
       </div>
