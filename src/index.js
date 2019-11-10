@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import classnames from 'classnames';
 
 function Square(props) {
   return (
@@ -90,13 +91,22 @@ class Game extends React.Component {
     const history = this.state.history;
     const current = history[this.state.stepNumber];
     const winner = calculateWinner(current.squares);
+    const stepNumber = this.state.stepNumber;
 
     const moves = history.map((step, move) => {
       const desc = move ?
-      'Go to move #' + move + ' at (' + (step.squareNumberPlayed % 3 + 1) + ', ' + Math.floor(step.squareNumberPlayed / 3 + 1) + ')' :
+      (
+        'Go to move #' +
+        move +
+        ' at (' +
+        (step.squareNumberPlayed % 3 + 1) +
+        ', ' +
+        Math.floor(step.squareNumberPlayed / 3 + 1) +
+        ')'
+      ) :
       'Go to game start';
       return (
-        <li key={move}>
+        <li key={move} className={classnames({ 'current-move': move === stepNumber })}>
           <button onClick={() => this.jumpTo(move)}>{desc}</button>
         </li>
       );
