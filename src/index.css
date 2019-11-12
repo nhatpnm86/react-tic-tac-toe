@@ -54,3 +54,7 @@ ul {
 .current-move > * {
   font-weight: bold;
 }
+
+.winning-square {
+  color: green;
+}
