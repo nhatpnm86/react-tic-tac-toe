@@ -15,14 +15,15 @@ function Square(props) {
 }
 
 class Board extends React.Component {
-  renderSquare(i) {
+  renderSquare(value, index) {
     const winningLine = this.props.winningLine;
-    const isWinningSquare = winningLine && winningLine.includes(i);
+    const isWinningSquare = winningLine && winningLine.includes(value);
     return (
       <Square
-        value={this.props.squares[i]}
+        key={index.toString()}
+        value={this.props.squares[value]}
         isWinningSquare={isWinningSquare}
-        onClick={() => this.props.onClick(i)}
+        onClick={() => this.props.onClick(value)}
       />
     );
   }
@@ -38,8 +39,8 @@ class Board extends React.Component {
         {
           squares.map((value, index) => {
             return (
-              <div className="board-row">
-                {value.map((v, i) => { return this.renderSquare(v) })}
+              <div key={index.toString()} className="board-row">
+                {value.map((v, i) => { return this.renderSquare(v, i) })}
               </div>
             )
           })
